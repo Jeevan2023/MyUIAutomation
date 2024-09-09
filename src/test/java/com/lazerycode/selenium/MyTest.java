@@ -1,21 +1,18 @@
 package com.lazerycode.selenium;
-
 import org.apache.commons.io.FileUtils;
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -53,11 +50,12 @@ public class MyTest {
                 driver.navigate().back();
                 sleep();
                 allSites = driver.findElements(By.xpath("//table[@id='sitemap']/tbody/tr"));
+                Assert.assertTrue("The Site is not present to take screenshot",allSites.size()>=0);
             }
         }
     }
 
-    @Test (description = "Upload File Test")
+    @Test (description = "This will be a test to check the functional flow of the application using Selenium Web Drivers.")
     public void uploadTest()
     {
         driver.get(" https://demo.dealsdray.com/");
@@ -71,6 +69,10 @@ public class MyTest {
         driver.findElement(By.xpath("//input[starts-with(@id, 'mui')]")).sendKeys("C:\\Users\\Victus\\Downloads\\demo-data.xlsx");
         sleep();
         driver.findElement(By.xpath("//button[text()='Import']")).click();
+
+        String validate = driver.findElement(By.xpath("//button[text()='Validate Data']")).getText();
+
+        Assert.assertEquals(validate,"Validate Data");
 
     }
 
